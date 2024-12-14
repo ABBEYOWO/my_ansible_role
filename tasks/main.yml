@@ -1,0 +1,34 @@
+---
+# tasks file for abbey-role
+    - name: Install apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+      notify:
+        - Restart nginx
+
+    - name: Update nginx
+      ansible.builtin.apt:
+        name: nginx
+        update_cache: yes
+      
+    
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /home/ubuntu/ansible/abbey-role/files/index.html
+        dest: /var/www/html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /home/ubuntu/ansible/abbey-role/files/index.html
+        dest: /usr/share/nginx/html/index1.html
+        owner: root
+        group: root
+        mode: '0644'
